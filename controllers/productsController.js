@@ -1,4 +1,4 @@
-const { Product } = require('../models/models')
+const { Product, Warehouse, ListOfProducts } = require('../models/models')
 const ApiError = require('../error/ApiError')
 const uuid = require('uuid')
 const path = require('path')
@@ -6,8 +6,7 @@ const fs = require('fs');
 
 class ProductsController {
     // eslint-disable-next-line no-unused-vars
-    async buy(req, res, next) {
-
+    async edit(req, res, next) {
     }
 
     async add(req, res, next) {
@@ -33,7 +32,10 @@ class ProductsController {
             const { vendorCode } = req.body
             const product = await Product.findOne({ where: { vendorCode } })
             if (product) {
-                fs.unlink(path.resolve(__dirname, '..', 'static', product.image), async () => { return await Product.destroy({ where: { vendorCode } }) })
+                fs.unlink(path.resolve(__dirname, '..', 'static', product.image), async () => {
+                    await ListOfProducts.destroy({ where: { vendorCode } })
+                    return await Product.destroy({ where: { vendorCode } })
+                })
             }
             else {
                 throw new Error(`There is no product with vendor code ${vendorCode}`)
