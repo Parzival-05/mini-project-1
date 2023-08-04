@@ -47,7 +47,7 @@ class ProductsController {
 
     async getByVendorCode(req, res) {
         const { vendorCode } = req.query
-        const product = await Product.findAndCountAll({
+        const product = await Product.findOne({
             where: { vendorCode }
         })
         return res.json(product)
