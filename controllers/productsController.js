@@ -2,6 +2,7 @@ const { Product } = require('../models/models')
 const ApiError = require('../error/ApiError')
 const uuid = require('uuid')
 const path = require('path')
+const fs = require('fs');
 
 class ProductsController {
     // eslint-disable-next-line no-unused-vars
@@ -10,12 +11,33 @@ class ProductsController {
     }
 
     async add(req, res, next) {
-        try { // in case of double add of unique column, method will return "Validation error" 
+        try {
             const { vendorCode, name, price, typeId } = req.body
             const { image } = req.files
             let fileName = uuid.v4() + ".jpg"
             image.mv(path.resolve(__dirname, '..', 'static', fileName))
             const product = await Product.create({ vendorCode, name, price, image: fileName, typeId })
+            return res.json(product)
+        } catch (e) {
+            if (e.name == "SequelizeUniqueConstraintError") {
+                next(ApiError.badRequest("Product with such name or vendor code is already exist"))
+            }
+            else {
+                next(ApiError.badRequest(e.message))
+            }
+        }
+    }
+
+    async delete(req, res, next) {
+        try {
+            const { vendorCode } = req.body
+            const product = await Product.findOne({ where: { vendorCode } })
+            if (product) {
+                fs.unlink(path.resolve(__dirname, '..', 'static', product.image), async () => { return await Product.destroy({ where: { vendorCode } }) })
+            }
+            else {
+                throw new Error(`There is no product with vendor code ${vendorCode}`)
+            }
             return res.json(product)
         } catch (e) {
             next(ApiError.badRequest(e.message))
