@@ -4,7 +4,7 @@ const express = require('express'); // импорт модуля
 const sequelize = require('./db');
 const fileUpload = require('express-fileupload')
 const cors = require('cors')
-const router = require('./routes/index')
+const router = require('./routes')
 const errorHandler = require('./middleware/ErrorHandlingMiddleware')
 const path = require('path')
 
