@@ -1,4 +1,4 @@
-const { Type } = require('../models/models')
+const { Type } = require('../models')
 // eslint-disable-next-line no-unused-vars
 const ApiError = require('../error/ApiError')
 

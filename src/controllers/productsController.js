@@ -1,4 +1,4 @@
-const { Product, Warehouse, ListOfProducts } = require('../models/models')
+const { Product, ListOfProducts } = require('../models')
 const ApiError = require('../error/ApiError')
 const uuid = require('uuid')
 const path = require('path')

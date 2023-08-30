@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-const { Warehouse, ListOfProducts, Product } = require('../models/models')
+const { Warehouse, ListOfProducts, Product } = require('../models')
 const ApiError = require('../error/ApiError')
 const OPERATIONS = { DELETE: 'DELETE', ADD: 'ADD' }
 
