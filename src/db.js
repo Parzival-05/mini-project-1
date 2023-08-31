@@ -1,5 +1,5 @@
 require('dotenv').config()
-const { Sequelize } = require('sequelize') // импортируем из модуля sequelize только класс Sequelize
+const { Sequelize } = require('sequelize')
 
 module.exports = new Sequelize(
     process.env.DB_NAME,

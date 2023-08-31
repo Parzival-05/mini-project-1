@@ -1,6 +1,6 @@
-require('dotenv').config(); // нужно подключить dotenv, чтобы считать переменные окружения (env) 
+require('dotenv').config();
 
-const express = require('express'); // импорт модуля
+const express = require('express');
 const sequelize = require('./db');
 const fileUpload = require('express-fileupload')
 const cors = require('cors')
@@ -8,21 +8,21 @@ const router = require('./routes')
 const errorHandler = require('./middleware/ErrorHandlingMiddleware')
 const path = require('path')
 
-const PORT = process.env.PORT; // порт, на котором будет работать сайт. Переменная PORT берется из .env 
+const PORT = process.env.PORT;
 
-const app = express() // создали объект
+const app = express()
 app.use(cors())
 app.use(express.json())
 app.use(express.static(path.resolve(__dirname, "static")))
 app.use(fileUpload({}))
 app.use('/api', router)
 
-app.use(errorHandler) // обработка ошибок
+app.use(errorHandler)
 
 const start = async () => {
     try {
-        await sequelize.authenticate(); // авторизоваться в БД
-        await sequelize.sync({ alter: true }); // для сверки состояний со схемой данных
+        await sequelize.authenticate();
+        await sequelize.sync({ alter: true });
         app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
     }
     catch (e) {
