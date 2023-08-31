@@ -1,7 +1,7 @@
 # mini-project-1
 First mini project for summer school (desbordante)
 
-`npm run dev` to run
+`yarn run dev` to run
 
 http://localhost:5005/api/... to send requests 
 
