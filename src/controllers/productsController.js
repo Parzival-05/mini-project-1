@@ -18,7 +18,7 @@ class ProductsController {
             const product = await Product.create({ vendorCode, name, price, image: fileName, typeId })
             return res.json(product)
         } catch (e) {
-            if (e.name == "SequelizeUniqueConstraintError") {
+            if (e.name === "SequelizeUniqueConstraintError") {
                 next(ApiError.badRequest("Product with such name or vendor code is already exist"))
             }
             else {
@@ -33,8 +33,9 @@ class ProductsController {
             const product = await Product.findOne({ where: { vendorCode } })
             if (product) {
                 fs.unlink(path.resolve(__dirname, '..', 'static', product.image), async () => {
-                    await ListOfProducts.destroy({ where: { vendorCode } })
-                    return await Product.destroy({ where: { vendorCode } })
+                    const parametersOfProductToDelete = { where: { vendorCode } }
+                    await ListOfProducts.destroy(parametersOfProductToDelete)
+                    return await Product.destroy(parametersOfProductToDelete)
                 })
             }
             else {
@@ -47,18 +48,16 @@ class ProductsController {
     }
 
     async getByType(req, res) {
-        let { typeId, limit, page } = req.query
+        const { typeId } = req.query
+        let { limit, page } = req.query
         page = page || 1
         limit = limit || 9
-        let offset = limit * (page - 1)
-        let products;
-        if (!typeId) {
-            products = await Product.findAndCountAll({ limit, offset })
+        const offset = limit * (page - 1)
+        const properties = { limit, offset, where: {} }
+        if (typeId) {
+            properties.where.typeId = typeId;
         }
-        else {
-            products = await Product.findAndCountAll({ where: { typeId }, limit, offset })
-        }
-        return res.json(products)
+        return res.json(await Product.findAndCountAll(properties))
     }
 
     async getById(req, res) {
@@ -75,6 +74,11 @@ class ProductsController {
             where: { vendorCode }
         })
         return res.json(product)
+    }
+
+    async getAll(req, res) {
+        const products = await Product.findAll()
+        return res.json(products)
     }
 }
 module.exports = new ProductsController()

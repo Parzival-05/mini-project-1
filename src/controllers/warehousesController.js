@@ -10,34 +10,31 @@ class WarehousesController {
             amount = 1
         }
         if (amount <= 0 || !Number.isInteger(amount)) {
-            throw new Error("Amount must be a positive integer number")
+            throw new Error("The number to be deleted must be a positive integer number")
         }
-        const product = await Product.findOne({ where: { vendorCode } })
+        const properties = { vendorCode }
+        const product = await Product.findOne({ where: properties })
         if (!product) {
             throw new Error("Product is not found")
         }
-        var listOfWarehouse = await ListOfProducts.findOne({ where: { warehouseId, vendorCode } })
+        properties.warehouseId = warehouseId
+        let listOfWarehouse = await ListOfProducts.findOne({ where: properties })
         if (listOfWarehouse) {
-            if (op == 'DELETE') {
-                listOfWarehouse.amount -= await amount
-                if (listOfWarehouse.amount < 0) {
-                    listOfWarehouse.amount = 0
+            if (op === 'DELETE') {
+                if (listOfWarehouse.amount < amount) {
+                    throw new Error("The number to be deleted must be less or equal than the current amount of products in the warehouse")
                 }
+                listOfWarehouse.amount -= amount
             }
             else {
                 listOfWarehouse.amount += amount
             }
             await listOfWarehouse.save()
+            return listOfWarehouse
         }
         else {
-            if (op == 'DELETE') {
-                listOfWarehouse = await ListOfProducts.create({ warehouseId, vendorCode, amount: 0 })
-            }
-            else {
-                listOfWarehouse = await ListOfProducts.create({ warehouseId, vendorCode, amount })
-            }
+            throw new Error("There is no such a warehouse")
         }
-        return listOfWarehouse
     }
 
     async create(req, res, next) {
@@ -54,8 +51,8 @@ class WarehousesController {
             const { warehouseId } = req.body
             const warehouse = await Warehouse.destroy({ where: { warehouseId } })
             const info = { message: `The warehouse with id ${warehouseId} is successfully deleted` }
-            if (warehouse == 0) {
-                info.message = `There is no warehouse with id ${warehouseId}`
+            if (warehouse === 0) {
+                info.message = "There is no such a warehouse"
             }
             return res.json(info)
         }
@@ -69,7 +66,6 @@ class WarehousesController {
             return res.json(listOfProducts)
         }
         catch (e) {
-            console.log(e)
             next(ApiError.badRequest(e.message))
         }
     }
@@ -77,11 +73,9 @@ class WarehousesController {
     async deleteProduct(req, res, next) {
         try {
             var { vendorCode, amount, warehouseId } = req.body
-            const listOfProducts = await this.updateAmountOfProducts(vendorCode, amount, warehouseId, OPERATIONS.DELETE)
-            return res.json(listOfProducts)
+            return res.json(await this.updateAmountOfProducts(vendorCode, amount, warehouseId, OPERATIONS.DELETE))
         }
         catch (e) {
-            console.log(e)
             next(ApiError.badRequest(e.message))
         }
     }

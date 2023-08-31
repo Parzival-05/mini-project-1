@@ -9,5 +9,6 @@ router.post('/edit', checkRole('ADMIN'), productsController.add) // edit product
 router.get('/getByType', productsController.getByType) // get lists of products with filtration by typeId
 router.get('/getById', productsController.getById) // get info about product by its productId 
 router.get('/getByVendorCode', productsController.getByVendorCode) // get info about product by its vendor code
+router.get('/', productsController.getAll)
 
 module.exports = router
