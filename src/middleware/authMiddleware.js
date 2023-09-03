@@ -1,6 +1,7 @@
 const JWT = require('jsonwebtoken')
+const { User } = require('../models/index')
 
-module.exports = function (req, res, next) {
+module.exports = async (req, res, next) => {
     if (req.method === "OPTIONS") {
         next()
     }
@@ -10,11 +11,10 @@ module.exports = function (req, res, next) {
             return res.status(401).json({ message: "Не авторизован" })
         }
         const decoded = JWT.verify(token, process.env.SECRET_KEY)
-        req.user = decoded
+        req.user = await User.findOne({ where: { email: decoded.email } })
         next()
     }
     catch (e) {
-        console.log(e)
         res.status(401).json({ message: "Не авторизован" })
     }
 }
