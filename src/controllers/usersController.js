@@ -46,9 +46,9 @@ class UsersController {
         catch (e) { next(ApiError.badRequest(e.message)) }
     }
 
-    async check(req, res) {
-        const token = generateJWT(req.user.id, req.user.email, req.user.role)
-        return res.json({ token: token })
+    async check({ user }, res) {
+        const token = generateJWT(user.id, user.email, user.role)
+        return res.json({ token })
     }
 }
 
