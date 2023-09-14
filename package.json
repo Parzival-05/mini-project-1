@@ -2,7 +2,7 @@
   "name": "mini-project-1",
   "packageManager": "yarn@3.6.3",
   "scripts": {
-    "dev": "nodemon ./src/index.js"
+    "dev": "nodemon ./bin/index.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
