@@ -1,4 +1,6 @@
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'Router'.
 const Router = require('express')
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'router'.
 const router = new Router()
 
 const productsRouter = require('./productsRouter')

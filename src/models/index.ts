@@ -1,6 +1,8 @@
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'sequelize'... Remove this comment to see the full error message
 const sequelize = require('../db')
 const { DataTypes } = require('sequelize')
 
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'User'.
 const User = sequelize.define('user', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     email: { type: DataTypes.STRING, allowNull: false },
@@ -8,6 +10,7 @@ const User = sequelize.define('user', {
     role: { type: DataTypes.STRING, defaultValue: "USER" }
 })
 
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'Product'.
 const Product = sequelize.define('product', {
     vendorCode: { type: DataTypes.INTEGER, primaryKey: true, allowNull: false },
     name: { type: DataTypes.STRING, unique: true, allowNull: false },
@@ -16,6 +19,7 @@ const Product = sequelize.define('product', {
     typeId: { type: DataTypes.INTEGER, allowNull: false }
 })
 
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'Warehouse'... Remove this comment to see the full error message
 const Warehouse = sequelize.define('warehouse', {
     warehouseId: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     country: { type: DataTypes.STRING, allowNull: false },
@@ -26,6 +30,7 @@ const Warehouse = sequelize.define('warehouse', {
     extraInfo: { type: DataTypes.STRING }
 })
 
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'ListOfProd... Remove this comment to see the full error message
 const ListOfProducts = sequelize.define('listOfProducts', {
     listId: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     warehouseId: { type: DataTypes.INTEGER, allowNull: false },
@@ -33,6 +38,7 @@ const ListOfProducts = sequelize.define('listOfProducts', {
     amount: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 1 }
 })
 
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'Type'.
 const Type = sequelize.define('type', {
     typeId: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: { type: DataTypes.STRING, allowNull: false, unique: true }

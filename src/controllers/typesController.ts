@@ -1,4 +1,6 @@
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'Type'.
 const { Type } = require('../models')
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'ApiError'.
 // eslint-disable-next-line no-unused-vars
 const ApiError = require('../error/ApiError')
 

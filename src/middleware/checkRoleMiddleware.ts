@@ -1,3 +1,4 @@
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'JWT'.
 const JWT = require('jsonwebtoken')
 
 module.exports = function (role) {

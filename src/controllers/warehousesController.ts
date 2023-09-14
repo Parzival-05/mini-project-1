@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'Warehouse'... Remove this comment to see the full error message
 const { Warehouse, ListOfProducts, Product } = require('../models')
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'ApiError'.
 const ApiError = require('../error/ApiError')
 const OPERATIONS = { DELETE: 'DELETE', ADD: 'ADD' }
 
@@ -17,6 +19,7 @@ class WarehousesController {
         if (!product) {
             throw new Error("Product is not found")
         }
+        // @ts-expect-error TS(2339): Property 'warehouseId' does not exist on type '{ v... Remove this comment to see the full error message
         properties.warehouseId = warehouseId
         let listOfWarehouse = await ListOfProducts.findOne({ where: properties })
         if (listOfWarehouse) {

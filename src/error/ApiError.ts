@@ -1,4 +1,6 @@
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'ApiError'.
 class ApiError extends Error {
+    status: any;
     constructor(status, message) {
         super();
         this.status = status
