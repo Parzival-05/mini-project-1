@@ -1,3 +1,4 @@
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'ApiError'.
 const ApiError = require('../error/ApiError')
 
 module.exports = function (err, req, res, next) {

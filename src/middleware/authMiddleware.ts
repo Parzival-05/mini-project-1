@@ -1,4 +1,6 @@
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'JWT'.
 const JWT = require('jsonwebtoken')
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'User'.
 const { User } = require('../models/index')
 
 module.exports = async (req, res, next) => {

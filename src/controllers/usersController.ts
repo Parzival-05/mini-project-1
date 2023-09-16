@@ -1,6 +1,9 @@
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'User'.
 const { User } = require('../models')
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'ApiError'.
 const ApiError = require('../error/ApiError')
 const bcrypt = require('bcrypt')
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'JWT'.
 const JWT = require('jsonwebtoken')
 
 const generateJWT = (user, email, role) => {

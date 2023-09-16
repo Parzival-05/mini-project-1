@@ -1,6 +1,9 @@
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'Product'.
 const { Product, ListOfProducts } = require('../models')
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'ApiError'.
 const ApiError = require('../error/ApiError')
 const uuid = require('uuid')
+// @ts-expect-error TS(2451): Cannot redeclare block-scoped variable 'path'.
 const path = require('path')
 const fs = require('fs');
 
@@ -55,6 +58,7 @@ class ProductsController {
         const offset = limit * (page - 1)
         const properties = { limit, offset, where: {} }
         if (typeId) {
+            // @ts-expect-error TS(2339): Property 'typeId' does not exist on type '{}'.
             properties.where.typeId = typeId;
         }
         return res.json(await Product.findAndCountAll(properties))

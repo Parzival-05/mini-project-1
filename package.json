@@ -2,7 +2,7 @@
   "name": "mini-project-1",
   "packageManager": "yarn@3.6.3",
   "scripts": {
-    "dev": "nodemon ./src/index.js"
+    "dev": "nodemon ./bin/index.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
@@ -17,6 +17,15 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "@types/bcrypt": "^10.0.28-alpha",
+    "@types/cors": "^2.8.14",
+    "@types/express": "^4.17.17",
+    "@types/express-fileupload": "^1.4.1",
+    "@types/jsonwebtoken": "^9.0.2",
+    "@types/nodemon": "^1.19.2",
+    "@types/pg": "^8.10.2",
+    "@types/uuid": "^9.0.4",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1"
   }
 }
